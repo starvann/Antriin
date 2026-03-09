@@ -57,6 +57,28 @@
             cursor: pointer;
             font-size: 16px;
             color: white;
+            position: relative;
+            justify-content: center;
+        }
+
+        .menu-item::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 2px;
+            background: #6F96D1;
+            transition: 0.3s;
+        }
+
+        .menu-item.active::after {
+            width: 85%;
+        }
+
+        .menu-item:hover::after {
+            width: 85%;
         }
 
         .icon-sidebar {
@@ -186,9 +208,9 @@
             <img src="assets/sidebar-decor.png" class="sidebar-decoration">
             <div class="menu">
 
-                <div class="menu-item"> Ambil Antrian</div>
-                <div class="menu-item"> Kartu Antrian</div>
-                <div class="menu-item"> Daftar Antrian</div>
+                <div class="menu-item"> <img src="assets/vector/anmbil-antrian.png" alt="vector" class="icon-sidebar">Ambil Antrian</div>
+                <div class="menu-item"> <img src="assets/vector/kartu-antrian.png" alt="vector" class="icon-sidebar">Kartu Antrian</div>
+                <div class="menu-item"> <img src="assets/vector/daftar-antrian.png" alt="vector" class="icon-sidebar">Daftar Antrian</div>
 
             </div>
 
@@ -242,7 +264,6 @@
         </div>
 
     </div>
-
 </body>
 
 </html>
