@@ -40,6 +40,7 @@
         .logo {
             width: 260px;
             margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         /* menu sidebar */
@@ -51,11 +52,15 @@
         .menu-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             padding: 15px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px;
+            color: white;
+        }
+
+        .icon-sidebar {
+            width: 25px;
         }
 
         /* icon besar dekorasi bawah */
