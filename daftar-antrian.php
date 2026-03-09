@@ -40,6 +40,7 @@
         .logo {
             width: 260px;
             margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         /* menu sidebar */
@@ -51,11 +52,37 @@
         .menu-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             padding: 15px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px;
+            color: white;
+            position: relative;
+            justify-content: center;
+        }
+
+        .menu-item::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 2px;
+            background: #6F96D1;
+            transition: 0.3s;
+        }
+
+        .menu-item.active::after {
+            width: 85%;
+        }
+
+        .menu-item:hover::after {
+            width: 85%;
+        }
+
+        .icon-sidebar {
+            width: 25px;
         }
 
         /* icon besar dekorasi bawah */
@@ -92,6 +119,7 @@
             padding: 10px 40px;
             border-radius: 30px;
             text-align: center;
+            font-family: "Poppins", sans-serif;
         }
 
         .header h1 {
@@ -112,33 +140,41 @@
 
         .antrian-container{
             margin-top: 40px;
-            width: 80%;
+            width: 100%;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 25px;
+            gap: 30px;
+            overflow-y:auto;
         }
         .antrian-card{
             width: 220px;
             background: rgba(200,220,255,0.7);
-            border-radius: 12px;
+            border-radius: 15px;
             padding: 20px;
             text-align: center;
+            font-family: "Poppins", sans-serif;
         }
         .antrian-card h1{
             font-size: 40px;
-            margin: 10px 0;
+            margin: 10px;
             color: #091F5B;
+            font-family: "Poppins", sans-serif;
         }
 
         .judul{
-            font-size: 12px;
+            font-size: 13px;
             color: #091F5B;
+            font-family: "Poppins", sans-serif;
+            border-bottom: 1px solid #091F5B;
+            font-weight: bold;
         }
 
         .tenant{
             font-size: 13px;
             color: #091F5B;
+            font-family: "Poppins", sans-serif;
+            border-top: 1px solid #091F5B;
         }
     </style>
 </head>
