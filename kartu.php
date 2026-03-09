@@ -65,7 +65,6 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            opacity: 0.2;
         }
 
 
@@ -179,7 +178,7 @@
         <div class="sidebar">
 
             <img src="assets/logo.png" class="logo">
-
+            <img src="assets/sidebar-decor.png" class="sidebar-decoration">
             <div class="menu">
 
                 <div class="menu-item"> Ambil Antrian</div>
