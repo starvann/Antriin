@@ -139,25 +139,26 @@
         /* ================= DAFTAR ANTRIAN ================= */
 
         .antrian-container{
-            margin-top: 40px;
             width: 100%;
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
+            justify-content: space-evenly;
             gap: 30px;
             overflow-y:auto;
+            align-item:stretch;
         }
         .antrian-card{
             width: 220px;
+            height: 140px;
             background: rgba(200,220,255,0.7);
             border-radius: 15px;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             font-family: "Poppins", sans-serif;
         }
         .antrian-card h1{
-            font-size: 40px;
-            margin: 10px;
+            font-size: 60px;
+            margin: 1px;
             color: #091F5B;
             font-family: "Poppins", sans-serif;
         }
@@ -166,7 +167,6 @@
             font-size: 13px;
             color: #091F5B;
             font-family: "Poppins", sans-serif;
-            border-bottom: 1px solid #091F5B;
             font-weight: bold;
         }
 
