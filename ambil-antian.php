@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -53,21 +54,40 @@ display:flex;
 align-items:center;
 gap:10px;
 padding:15px 0;
-border-bottom:1px solid rgba(255,255,255,0.2);
+border-bottom: 1px  solid rgba(255,255,255,0.2);
 cursor:pointer;
 font-size:14px;
 }
 
-/* icon besar dekorasi bawah */
+/* garis pendek default */
 
-.sidebar-decoration{
+.menu-item::after{
+content:"";
 position:absolute;
 bottom:0;
 left:0;
-width:100%;
-opacity:0.2;
+
+width:40px; /* pendek */
+height:2px;
+
+background:rgba(255,255,255,0.3);
+
+transition:0.3s;
 }
 
+/* saat hover → memanjang */
+
+.menu-item:hover::after{
+width:100%;
+background:white;
+}
+
+/* menu aktif → tetap panjang */
+
+.menu-item.active::after{
+width:100%;
+background:white;
+}
 
 /* ================= MAIN CONTENT ================= */
 
@@ -110,55 +130,81 @@ color:#091F5B;
 }
 
 
-/* ================= CARD ================= */
+/* ================= FORM ================= */
 
-.card-container{
-position:relative;
-margin-top:40px;
-}
-
-/* gambar kartu */
-
-.card-img{
-width:720px;
+.form-box{
+margin-top:50px;
+background:#F1F5FB;
+padding:40px;
+border-radius:20px;
+width:520px;
 box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
-/* judul kartu */
-
-.card-title{
-position:absolute;
-top:50px;
-left:50%;
-transform:translateX(-50%);
+.form-box h2{
+text-align:center;
+margin-bottom:25px;
+color:#091F5B;
 font-weight:700;
-letter-spacing:2px;
+}
+
+.form-box label{
+font-size:14px;
 color:#091F5B;
 }
 
-/* nomor antrian */
-
-.nomor{
-position:absolute;
-top:130px;
-left:50%;
-transform:translateX(-50%);
-font-size:120px;
-font-weight:800;
+.form-box input,
+.form-box select{
+width:100%;
+padding:12px;
+margin-top:8px;
+margin-bottom:20px;
+border-radius:10px;
+border:none;
+background:#E9EDF5;
+font-family:"Poppins", sans-serif;
 }
 
+.form-box button{
+width:100%;
 
-/* info bawah kartu */
+/* warna normal */
+background:#091F5B;
 
-.info{
-position:absolute;
-bottom:60px;
-left:90px;
-right:90px;
-
-display:flex;
-justify-content:space-between;
+color:white;
+padding:12px;
+border:none;
+border-radius:10px;
+cursor:pointer;
 font-size:14px;
+font-weight:500;
+
+transition:0.3s;
+}
+
+/* saat kursor di atas button */
+
+.form-box button:hover{
+
+background:linear-gradient(
+90deg,
+#020B25,
+#0E308E,
+#6F96D1
+);
+
+box-shadow:0 6px 15px rgba(14,48,142,0.4);
+
+transform:scale(1.03);
+}
+
+.hasil{
+margin-top:20px;
+padding:12px;
+background:#DFF0D8;
+color:#2E7D32;
+border-radius:10px;
+text-align:center;
 }
 
 
@@ -175,8 +221,9 @@ cursor:pointer;
 font-size:14px;
 }
 
-.btn:hover{
-background:#0d2c84;
+
+.form-box select option:hover{
+background:#D0E3FF;
 }
 
 </style>
@@ -197,8 +244,7 @@ background:#0d2c84;
 
 <div class="menu">
 
-<div class="menu-item"> Ambil Antrian</div>
-<div class="menu-item"> Kartu Antrian</div>
+<div class="menu-item active"> Ambil Antrian</div><div class="menu-item"> Kartu Antrian</div>
 <div class="menu-item"> Daftar Antrian</div>
 
 </div>
@@ -220,43 +266,60 @@ background:#0d2c84;
 
 
 
-<!-- KARTU ANTRIAN -->
+<!-- ================= FORM PENGAMBILAN ================= -->
 
-<div class="card-container">
+<div class="form-box">
 
-<img src="assets/Kartu.png" class="card-img">
+<h2>Form Pengambilan Antrian</h2>
 
-<div class="card-title">
-Form Pengambilan Antrian
-</div>
+<form method="post">
 
-<form>
-    <label>Nomor Telepon</label>
-    <input type="text" placeholder="Masukkan Nomor Telepon">
+<label>Nomor Telepon</label>
 
-    <label>Loket</label>
-    <select>
-        <option>DimTop - Dimsum Topia</option>
-        <option>Pentol Gacor</option>
-        <option>Tea Station</option>
-        <option>Samtara - Sambal Nusantara</option>
-        <option>Jasera</option>
-        <option>Steak City</option>
-        <option>Ramenchan</option>
-        <option>Sushikun</option>
-        <option>Teh Jawa</option>
-        <option>Ah Bang Kopitiam</option>
-    </select>
+<input 
+type="text" 
+name="telp" 
+placeholder="Masukkan Nomor Telepon"
+required
+>
+
+<label>Loket</label>
+
+<select name="loket" required>
+
+<option value="">Pilih Loket</option>
+
+<option>DimTop - Dimsum Topia</option>
+<option>Pentol Gacor</option>
+<option>Man Se</option>
+<option>Tea Station</option>
+<option>Samtara - Sambal Nusantara</option>
+<option>Jasera</option>
+<option>Steak City</option>
+<option>Kememchan</option>
+<option>Sushikun</option>
+<option>Teh Jawa</option>
+<option>Ah Bang Kopitiam</option>
+
+</select>
+
+<button type="submit" name="ambil">
+Ambil Antrian
+</button>
+
 </form>
 
+<?php
 
+if(isset($_POST['ambil'])){
 
+$telp = $_POST['telp'];
+$loket = $_POST['loket'];
 
-<!-- BUTTON -->
+}
 
-<button class="btn">
-Ambil Antrian Baru
-</button>
+?>
+</div>
 
 </div>
 
