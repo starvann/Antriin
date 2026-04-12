@@ -93,8 +93,11 @@
             left: 0;
             width: 100%;
         }
-
-
+        
+        a {
+        text-decoration: none;
+        color: white;
+        }
         /* ================= MAIN CONTENT ================= */
 
         .main-content {
@@ -145,7 +148,7 @@
             justify-content: space-evenly;
             gap: 30px;
             overflow-y:auto;
-            align-item:stretch;
+            align-items:stretch;
         }
         .antrian-card{
             width: 220px;
@@ -193,11 +196,9 @@
             <img src="assets/logo.png" class="logo">
             <img src="assets/sidebar-decor.png" class="sidebar-decoration">
             <div class="menu">
-
-                <div class="menu-item"> Ambil Antrian</div>
-                <div class="menu-item"> Kartu Antrian</div>
-                <div class="menu-item"> Daftar Antrian</div>
-
+                <div class="menu-item"> <img src="assets/vector/anmbil-antrian.png" alt="vector" class="icon-sidebar"> <a href="ambil-antian.php">Antrian</a> </div>
+                <div class="menu-item"> <img src="assets/vector/kartu-antrian.png" alt="vector" class="icon-sidebar"><a href="kartu-antrian.php">Kartu Antrian</a></div>
+                <div class="menu-item active"> <img src="assets/vector/daftar-antrian.png" alt="vector" class="icon-sidebar"><a href="daftar-antrian.php">Daftar Antrian</a></div>
             </div>
 
         </div>
