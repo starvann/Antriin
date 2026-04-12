@@ -1,3 +1,55 @@
+<?php
+$conn = mysqli_connect("127.0.0.1", "root", "", "admin_antrian");
+
+if (!$conn) {
+    die("Koneksi gagal: " . mysqli_connect_error());
+}
+
+if(isset($_POST['ambil'])){
+
+    $telp = $_POST['telp'];
+    $loket = $_POST['loket'];
+
+    $service_map = [
+        "DimTop - Dimsum Topia" => 1,
+        "Pentol Gacor" => 2,
+        "Man Se" => 3,
+        "Tea Station" => 4,
+        "Samtara - Sambal Nusantara" => 5,
+        "Jasera" => 6,
+        "Steak City" => 7,
+        "Kememchan" => 8,
+        "Sushikun" => 9,
+        "Teh Jawa" => 10,
+        "Ah Bang Kopitiam" => 11
+    ];
+
+    $service_id = $service_map[$loket];
+    $today = date('Y-m-d');
+
+    $query = mysqli_query($conn, "
+        SELECT MAX(queue_number) as last 
+        FROM queues 
+        WHERE service_id = $service_id 
+        AND appointment_date = '$today'
+    ");
+
+    $data = mysqli_fetch_assoc($query);
+    $last = $data['last'] ?? 0;
+    $next = $last + 1;
+
+    mysqli_query($conn, "
+        INSERT INTO queues 
+        (service_id, queue_number, appointment_date, status, visitor_phone, created_at, updated_at) 
+        VALUES 
+        ($service_id, $next, '$today', 'waiting', '$telp', NOW(), NOW())
+    ");
+
+    header("Location: nomor-antrian.php?nomor=$next&telp=$telp&loket=$loket");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,65 +82,74 @@ height:100vh;
 
 /* ================= SIDEBAR ================= */
 
-.sidebar{
-width:280px;
-background:#091F5B;
-color:white;
-padding:30px;
-position:relative;
-}
+        .sidebar {
+            width: 280px;
+            background: #091F5B;
+            color: white;
+            padding: 30px;
+            position: relative;
+        }
 
-.logo{
-width:150px;
-margin-bottom:30px;
-}
+        .logo {
+            width: 260px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
 
-/* menu sidebar */
+        /* menu sidebar */
 
-.menu{
-margin-top:40px;
-}
+        .menu {
+            margin-top: 40px;
+        }
 
-.menu-item{
-display:flex;
-align-items:center;
-gap:10px;
-padding:15px 0;
-border-bottom: 1px  solid rgba(255,255,255,0.2);
-cursor:pointer;
-font-size:14px;
-}
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 0;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+            position: relative;
+            justify-content: center;
+        }
 
-/* garis pendek default */
+        .menu-item::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 2px;
+            background: #6F96D1;
+            transition: 0.3s;
+        }
 
-.menu-item::after{
-content:"";
-position:absolute;
-bottom:0;
-left:0;
+        .menu-item.active::after {
+            width: 85%;
+        }
 
-width:40px; /* pendek */
-height:2px;
+        .menu-item:hover::after {
+            width: 85%;
+        }
 
-background:rgba(255,255,255,0.3);
+        .icon-sidebar {
+            width: 25px;
+        }
 
-transition:0.3s;
-}
+        /* icon besar dekorasi bawah */
 
-/* saat hover → memanjang */
-
-.menu-item:hover::after{
-width:100%;
-background:white;
-}
-
-/* menu aktif → tetap panjang */
-
-.menu-item.active::after{
-width:100%;
-background:white;
-}
-
+        .sidebar-decoration {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+        a {
+        text-decoration: none;
+        color: white;
+        }
 /* ================= MAIN CONTENT ================= */
 
 .main-content{
@@ -226,6 +287,74 @@ font-size:14px;
 background:#D0E3FF;
 }
 
+/* ================= RESPONSIVE ================= */
+
+/* Tablet */
+@media (max-width: 1024px){
+
+.container{
+    flex-direction: column;
+    height: auto;
+        display:flex;
+    min-height:100vh;
+}
+
+.sidebar{
+    width: 100%;
+    text-align: center;
+}
+
+.main-content{
+    border-radius: 0;
+    padding-bottom: 40px;
+}
+
+.form-box{
+    width: 80%;
+}
+
+}
+
+/* HP */
+@media (max-width: 600px){
+
+.logo{
+    width: 120px;
+}
+
+.menu-item{
+    font-size: 12px;
+    padding: 10px 0;
+}
+
+/* header */
+.header h1{
+    font-size: 24px;
+}
+
+.header h2{
+    font-size: 16px;
+}
+
+/* form */
+.form-box{
+    width: 90%;
+    padding: 25px;
+}
+
+.form-box input,
+.form-box select{
+    padding: 10px;
+    font-size: 14px;
+}
+
+.form-box button{
+    font-size: 14px;
+    padding: 10px;
+}
+
+}
+
 </style>
 </head>
 
@@ -241,11 +370,11 @@ background:#D0E3FF;
 <div class="sidebar">
 
 <img src="assets/logo.png" class="logo">
-
+<img src="assets/sidebar-decor.png" class="sidebar-decoration">
 <div class="menu">
-
-<div class="menu-item active"> Ambil Antrian</div><div class="menu-item"> Kartu Antrian</div>
-<div class="menu-item"> Daftar Antrian</div>
+    <div class="menu-item active"> <img src="assets/vector/anmbil-antrian.png" alt="vector" class="icon-sidebar"> <a href="">Antrian</a> </div>
+    <div class="menu-item"> <img src="assets/vector/kartu-antrian.png" alt="vector" class="icon-sidebar"><a href="kartu-antrian.php">Kartu Antrian</a></div>
+    <div class="menu-item"> <img src="assets/vector/daftar-antrian.png" alt="vector" class="icon-sidebar"><a href="daftar-antrian.php">Daftar Antrian</a></div>
 
 </div>
 
@@ -308,17 +437,6 @@ Ambil Antrian
 </button>
 
 </form>
-
-<?php
-
-if(isset($_POST['ambil'])){
-
-$telp = $_POST['telp'];
-$loket = $_POST['loket'];
-
-}
-
-?>
 </div>
 
 </div>

@@ -1,3 +1,9 @@
+<?php
+$nomor = $_GET['nomor'] ?? '-';
+$telp = $_GET['telp'] ?? '-';
+$loket = $_GET['loket'] ?? '-';
+?>
+
 <html lang="en">
 
 <head>
@@ -236,17 +242,16 @@
             <div class="card-container">
 
                 <img src="assets/Kartu.png" class="card-img">
-
-                <div class="nomor">
-                    34
-                </div>
+<div class="nomor">
+    <?php echo $nomor; ?>
+</div>
 
 
                 <div class="info">
 
                     <div>
-                        Nomor Telepon : 084782347238 <br>
-                        Loket : DimTop - Dimsum Topia
+                        Nomor Telepon : <?php echo $telp; ?> <br>
+Loket : <?php echo $loket; ?>
                     </div>
 
                 </div>
