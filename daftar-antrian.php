@@ -160,6 +160,7 @@
             border-radius: 15px;
             padding: 15px;
             text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
 
         .antrian-card h1 {
