@@ -38,7 +38,7 @@
         /* ================= SIDEBAR ================= */
 
         .sidebar {
-            width: 260px;
+            width: 280px;
             background: #091F5B;
             color: white;
             padding: 30px;
@@ -46,9 +46,9 @@
         }
 
         .logo {
-            width: 220px;
+            width: 260px;
             margin-bottom: 30px;
-            
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         /* menu sidebar */
@@ -60,12 +60,13 @@
         .menu-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 14px 0;
+            gap: 12px;
+            padding: 15px 0;
             cursor: pointer;
+            font-size: 16px;
             color: white;
-            justify-content: center;
             position: relative;
+            justify-content: center;
         }
 
         .menu-item::after {
@@ -77,6 +78,7 @@
             width: 40%;
             height: 2px;
             background: #6F96D1;
+            transition: 0.3s;
         }
 
         .menu-item.active::after {
@@ -98,6 +100,11 @@
             bottom: 0;
             left: 0;
             width: 100%;
+        }
+        
+        a {
+        text-decoration: none;
+        color: white;
         }
 
 
@@ -224,9 +231,9 @@
             <img src="assets/sidebar-decor.png" class="sidebar-decoration">
             <div class="menu">
 
-                <div class="menu-item"> <img src="assets/vector/anmbil-antrian.png" alt="vector" class="icon-sidebar">Ambil Antrian</div>
-                <div class="menu-item"> <img src="assets/vector/kartu-antrian.png" alt="vector" class="icon-sidebar">Kartu Antrian</div>
-                <div class="menu-item"> <img src="assets/vector/daftar-antrian.png" alt="vector" class="icon-sidebar">Daftar Antrian</div>
+                <div class="menu-item"> <img src="assets/vector/anmbil-antrian.png" alt="vector" class="icon-sidebar"> <a href="ambil-antian.php">Antrian</a> </div>
+                <div class="menu-item active"> <img src="assets/vector/kartu-antrian.png" alt="vector" class="icon-sidebar"><a href="kartu-antrian.php">Kartu Antrian</a></div>
+                <div class="menu-item"> <img src="assets/vector/daftar-antrian.png" alt="vector" class="icon-sidebar"><a href="daftar-antrian.php">Daftar Antrian</a></div>
 
             </div>
 
