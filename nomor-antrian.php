@@ -99,10 +99,10 @@ $loket = $_GET['loket'] ?? '-';
             left: 0;
             width: 100%;
         }
-        
+
         a {
-        text-decoration: none;
-        color: white;
+            text-decoration: none;
+            color: white;
         }
 
 
@@ -218,11 +218,9 @@ $loket = $_GET['loket'] ?? '-';
             <img src="assets/logo.png" class="logo">
             <img src="assets/sidebar-decor.png" class="sidebar-decoration">
             <div class="menu">
-
                 <div class="menu-item"> <img src="assets/vector/anmbil-antrian.png" alt="vector" class="icon-sidebar"> <a href="ambil-antian.php">Antrian</a> </div>
                 <div class="menu-item"> <img src="assets/vector/kartu-antrian.png" alt="vector" class="icon-sidebar"><a href="kartu-antrian.php">Kartu Antrian</a></div>
                 <div class="menu-item"> <img src="assets/vector/daftar-antrian.png" alt="vector" class="icon-sidebar"><a href="daftar-antrian.php">Daftar Antrian</a></div>
-
             </div>
 
         </div>
@@ -247,16 +245,16 @@ $loket = $_GET['loket'] ?? '-';
             <div class="card-container">
 
                 <img src="assets/Kartu.png" class="card-img">
-<div class="nomor">
-    <?php echo $nomor; ?>
-</div>
+                <div class="nomor">
+                    <?php echo $nomor; ?>
+                </div>
 
 
                 <div class="info">
 
                     <div>
                         Nomor Telepon : <?php echo $telp; ?> <br>
-Loket : <?php echo $loket; ?>
+                        Loket : <?php echo $loket; ?>
                     </div>
 
                 </div>

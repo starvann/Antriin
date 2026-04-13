@@ -93,11 +93,12 @@
             left: 0;
             width: 100%;
         }
-        
+
         a {
-        text-decoration: none;
-        color: white;
+            text-decoration: none;
+            color: white;
         }
+
         /* ================= MAIN CONTENT ================= */
 
         .main-content {
@@ -138,46 +139,53 @@
             font-size: 32px;
             color: #091F5B;
         }
-        
+
         /* ================= DAFTAR ANTRIAN ================= */
 
-        .antrian-container{
+        .antrian-container {
             width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 30px;
-            overflow-y:auto;
-            align-items:stretch;
+            padding: 20px 40px;
+            overflow-y: auto;
+            margin: 30px auto;
         }
-        .antrian-card{
-            width: 220px;
-            height: 140px;
-            background: rgba(200,220,255,0.7);
+
+        .antrian-card {
+            width: 100%;
+            max-width: 400px;
+            height: 190px;
+            background: rgba(200, 220, 255, 0.7);
             border-radius: 15px;
             padding: 15px;
             text-align: center;
-            font-family: "Poppins", sans-serif;
-        }
-        .antrian-card h1{
-            font-size: 60px;
-            margin: 1px;
-            color: #091F5B;
-            font-family: "Poppins", sans-serif;
         }
 
-        .judul{
-            font-size: 13px;
+        .antrian-card h1 {
+            font-size: 80px;
+            margin: 0px;
+            color: #091F5B;
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            padding: 0px;
+        }
+
+        .judul {
+            font-size: 20px;
             color: #091F5B;
             font-family: "Poppins", sans-serif;
             font-weight: bold;
+            margin-top: 5px;
         }
 
-        .tenant{
-            font-size: 13px;
+        .tenant {
+            font-size: 20px;
             color: #091F5B;
             font-family: "Poppins", sans-serif;
             border-top: 1px solid #091F5B;
+            margin: 0px;
+            padding-top: 5px;
         }
     </style>
 </head>
@@ -247,7 +255,7 @@
                 <div class="antrian-card">
                     <div class="judul">NOMOR ANTRIAN SAAT INI</div>
                     <h1> 01 </h1>
-                    <p class="tenant">Jasera -  Jamuan Sejuta Rasa</p>
+                    <p class="tenant">Jasera - Jamuan Sejuta Rasa</p>
                 </div>
                 <div class="antrian-card">
                     <div class="judul">NOMOR ANTRIAN SAAT INI</div>

@@ -33,7 +33,7 @@
             text-align: center;
             font-weight: bold;
             color: #091F5B;
-}
+        }
 
         /* ================= SIDEBAR ================= */
 
@@ -101,10 +101,10 @@
             left: 0;
             width: 100%;
         }
-        
+
         a {
-        text-decoration: none;
-        color: white;
+            text-decoration: none;
+            color: white;
         }
 
 
@@ -160,7 +160,7 @@
             max-width: 1050px;
         }
 
-        .card{
+        .card {
             position: relative;
             width: 100%;
             height: 220px;
@@ -174,7 +174,7 @@
             width: 100%;
         }
 
-        .content{
+        .content {
             text-align: center;
         }
 
@@ -194,7 +194,7 @@
             top: 46%;
             left: 50%;
             transform: translate(-50%, -50%);
-            
+
             font-size: 90px;
             font-weight: 800;
         }
@@ -212,8 +212,6 @@
             text-align: center;
             line-height: 1.4;
         }
-
-
     </style>
 </head>
 
@@ -241,122 +239,122 @@
 
 
         <!-- ================= MAIN CONTENT ================= -->
-<div class="main-content">
+        <div class="main-content">
 
-    <!-- HEADER -->
-    <div class="header">
-        <h1>FOODCOURT</h1>
-        <h2>BELITOPIA</h2>
+            <!-- HEADER -->
+            <div class="header">
+                <h1>FOODCOURT</h1>
+                <h2>BELITOPIA</h2>
+            </div>
+
+            <!-- TAMBAHAN PENTING (INI YANG KAMU KURANGIN!) -->
+            <div class="cards">
+
+                <!-- KARTU -->
+                <div class="card-container">
+                    <img src="assets/Kartu.png" class="card-img">
+                    <div class="nomor">34</div>
+                    <div class="info">
+                        Nomor Telepon : 084782347238 <br>
+                        Loket : DimTop - Dimsum Topia
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <img src="assets/Kartu.png" class="card-img">
+                    <div class="nomor">34</div>
+                    <div class="info">
+                        Nomor Telepon : 084782347238 <br>
+                        Loket : Samtara - Sambal Nusantara
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <img src="assets/Kartu.png" class="card-img">
+                    <div class="nomor">34</div>
+                    <div class="info">
+                        Nomor Telepon : 084782347238 <br>
+                        Loket : Pentol Gacor
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <img src="assets/Kartu.png" class="card-img">
+                    <div class="nomor">34</div>
+                    <div class="info">
+                        Nomor Telepon : 084782347238 <br>
+                        Loket : Man Se
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <img src="assets/Kartu.png" class="card-img">
+                    <div class="nomor">34</div>
+                    <div class="info">
+                        Nomor Telepon : 084782347238 <br>
+                        Loket : Ah Bang Kopitiam
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <img src="assets/Kartu.png" class="card-img">
+                    <div class="nomor">34</div>
+                    <div class="info">
+                        Nomor Telepon : 084782347238 <br>
+                        Loket : Tea Station
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <img src="assets/Kartu.png" class="card-img">
+                    <div class="nomor">34</div>
+                    <div class="info">
+                        Nomor Telepon : 084782347238 <br>
+                        Loket : Jasera
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <img src="assets/Kartu.png" class="card-img">
+                    <div class="nomor">34</div>
+                    <div class="info">
+                        Nomor Telepon : 084782347238 <br>
+                        Loket : Steak City
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <img src="assets/Kartu.png" class="card-img">
+                    <div class="nomor">34</div>
+                    <div class="info">
+                        Nomor Telepon : 084782347238 <br>
+                        Loket : Sushikun
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <img src="assets/Kartu.png" class="card-img">
+                    <div class="nomor">34</div>
+                    <div class="info">
+                        Nomor Telepon : 084782347238 <br>
+                        Loket : Ramenchan
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <img src="assets/Kartu.png" class="card-img">
+                    <div class="nomor">34</div>
+                    <div class="info">
+                        Nomor Telepon : 084782347238 <br>
+                        Loket : Teh Jawa
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-
-    <!-- TAMBAHAN PENTING (INI YANG KAMU KURANGIN!) -->
-    <div class="cards">
-
-        <!-- KARTU -->
-        <div class="card-container">
-            <img src="assets/Kartu.png" class="card-img">
-            <div class="nomor">34</div>
-            <div class="info">
-                Nomor Telepon : 084782347238 <br>
-                Loket : DimTop - Dimsum Topia
-            </div>
-        </div>
-
-        <div class="card-container">
-            <img src="assets/Kartu.png" class="card-img">
-            <div class="nomor">34</div>
-            <div class="info">
-                Nomor Telepon : 084782347238 <br>
-                Loket : Samtara - Sambal Nusantara
-            </div>
-        </div>
-
-        <div class="card-container">
-            <img src="assets/Kartu.png" class="card-img">
-            <div class="nomor">34</div>
-            <div class="info">
-                Nomor Telepon : 084782347238 <br>
-                Loket : Pentol Gacor
-            </div>
-        </div>
-
-        <div class="card-container">
-            <img src="assets/Kartu.png" class="card-img">
-            <div class="nomor">34</div>
-            <div class="info">
-                Nomor Telepon : 084782347238 <br>
-                Loket : Man Se
-            </div>
-        </div>
-
-        <div class="card-container">
-            <img src="assets/Kartu.png" class="card-img">
-            <div class="nomor">34</div>
-            <div class="info">
-                Nomor Telepon : 084782347238 <br>
-                Loket : Ah Bang Kopitiam
-            </div>
-        </div>
-
-        <div class="card-container">
-            <img src="assets/Kartu.png" class="card-img">
-            <div class="nomor">34</div>
-            <div class="info">
-                Nomor Telepon : 084782347238 <br>
-                Loket : Tea Station
-            </div>
-        </div>
-
-        <div class="card-container">
-            <img src="assets/Kartu.png" class="card-img">
-            <div class="nomor">34</div>
-            <div class="info">
-                Nomor Telepon : 084782347238 <br>
-                Loket : Jasera
-            </div>
-        </div>
-
-        <div class="card-container">
-            <img src="assets/Kartu.png" class="card-img">
-            <div class="nomor">34</div>
-            <div class="info">
-                Nomor Telepon : 084782347238 <br>
-                Loket : Steak City
-            </div>
-        </div>
-
-        <div class="card-container">
-            <img src="assets/Kartu.png" class="card-img">
-            <div class="nomor">34</div>
-            <div class="info">
-                Nomor Telepon : 084782347238 <br>
-                Loket : Sushikun
-            </div>
-        </div>
-
-        <div class="card-container">
-            <img src="assets/Kartu.png" class="card-img">
-            <div class="nomor">34</div>
-            <div class="info">
-                Nomor Telepon : 084782347238 <br>
-                Loket : Ramenchan
-            </div>
-        </div>
-
-        <div class="card-container">
-            <img src="assets/Kartu.png" class="card-img">
-            <div class="nomor">34</div>
-            <div class="info">
-                Nomor Telepon : 084782347238 <br>
-                Loket : Teh Jawa
-            </div>
-        </div>
-
-    </div>
-
-</div>
-
-        </div>
 
     </div>
 </body>
