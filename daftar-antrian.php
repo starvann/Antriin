@@ -40,6 +40,7 @@
         .logo {
             width: 260px;
             margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         /* menu sidebar */
@@ -51,11 +52,37 @@
         .menu-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             padding: 15px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px;
+            color: white;
+            position: relative;
+            justify-content: center;
+        }
+
+        .menu-item::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 2px;
+            background: #6F96D1;
+            transition: 0.3s;
+        }
+
+        .menu-item.active::after {
+            width: 85%;
+        }
+
+        .menu-item:hover::after {
+            width: 85%;
+        }
+
+        .icon-sidebar {
+            width: 25px;
         }
 
         /* icon besar dekorasi bawah */
@@ -66,8 +93,11 @@
             left: 0;
             width: 100%;
         }
-
-
+        
+        a {
+        text-decoration: none;
+        color: white;
+        }
         /* ================= MAIN CONTENT ================= */
 
         .main-content {
@@ -92,6 +122,7 @@
             padding: 10px 40px;
             border-radius: 30px;
             text-align: center;
+            font-family: "Poppins", sans-serif;
         }
 
         .header h1 {
@@ -111,34 +142,42 @@
         /* ================= DAFTAR ANTRIAN ================= */
 
         .antrian-container{
-            margin-top: 40px;
-            width: 80%;
+            width: 100%;
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-            gap: 25px;
+            justify-content: space-evenly;
+            gap: 30px;
+            overflow-y:auto;
+            align-items:stretch;
         }
         .antrian-card{
             width: 220px;
+            height: 140px;
             background: rgba(200,220,255,0.7);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 15px;
+            padding: 15px;
             text-align: center;
+            font-family: "Poppins", sans-serif;
         }
         .antrian-card h1{
-            font-size: 40px;
-            margin: 10px 0;
+            font-size: 60px;
+            margin: 1px;
             color: #091F5B;
+            font-family: "Poppins", sans-serif;
         }
 
         .judul{
-            font-size: 12px;
+            font-size: 13px;
             color: #091F5B;
+            font-family: "Poppins", sans-serif;
+            font-weight: bold;
         }
 
         .tenant{
             font-size: 13px;
             color: #091F5B;
+            font-family: "Poppins", sans-serif;
+            border-top: 1px solid #091F5B;
         }
     </style>
 </head>
@@ -157,11 +196,9 @@
             <img src="assets/logo.png" class="logo">
             <img src="assets/sidebar-decor.png" class="sidebar-decoration">
             <div class="menu">
-
-                <div class="menu-item"> Ambil Antrian</div>
-                <div class="menu-item"> Kartu Antrian</div>
-                <div class="menu-item"> Daftar Antrian</div>
-
+                <div class="menu-item"> <img src="assets/vector/anmbil-antrian.png" alt="vector" class="icon-sidebar"> <a href="ambil-antian.php">Antrian</a> </div>
+                <div class="menu-item"> <img src="assets/vector/kartu-antrian.png" alt="vector" class="icon-sidebar"><a href="kartu-antrian.php">Kartu Antrian</a></div>
+                <div class="menu-item active"> <img src="assets/vector/daftar-antrian.png" alt="vector" class="icon-sidebar"><a href="daftar-antrian.php">Daftar Antrian</a></div>
             </div>
 
         </div>

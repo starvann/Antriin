@@ -1,3 +1,9 @@
+<?php
+$nomor = $_GET['nomor'] ?? '-';
+$telp = $_GET['telp'] ?? '-';
+$loket = $_GET['loket'] ?? '-';
+?>
+
 <html lang="en">
 
 <head>
@@ -92,6 +98,11 @@
             bottom: 0;
             left: 0;
             width: 100%;
+        }
+        
+        a {
+        text-decoration: none;
+        color: white;
         }
 
 
@@ -208,9 +219,9 @@
             <img src="assets/sidebar-decor.png" class="sidebar-decoration">
             <div class="menu">
 
-                <div class="menu-item"> <img src="assets/vector/anmbil-antrian.png" alt="vector" class="icon-sidebar">Ambil Antrian</div>
-                <div class="menu-item"> <img src="assets/vector/kartu-antrian.png" alt="vector" class="icon-sidebar">Kartu Antrian</div>
-                <div class="menu-item"> <img src="assets/vector/daftar-antrian.png" alt="vector" class="icon-sidebar">Daftar Antrian</div>
+                <div class="menu-item"> <img src="assets/vector/anmbil-antrian.png" alt="vector" class="icon-sidebar"> <a href="ambil-antian.php">Antrian</a> </div>
+                <div class="menu-item"> <img src="assets/vector/kartu-antrian.png" alt="vector" class="icon-sidebar"><a href="kartu-antrian.php">Kartu Antrian</a></div>
+                <div class="menu-item"> <img src="assets/vector/daftar-antrian.png" alt="vector" class="icon-sidebar"><a href="daftar-antrian.php">Daftar Antrian</a></div>
 
             </div>
 
@@ -236,17 +247,16 @@
             <div class="card-container">
 
                 <img src="assets/Kartu.png" class="card-img">
-
-                <div class="nomor">
-                    34
-                </div>
+<div class="nomor">
+    <?php echo $nomor; ?>
+</div>
 
 
                 <div class="info">
 
                     <div>
-                        Nomor Telepon : 084782347238 <br>
-                        Loket : DimTop - Dimsum Topia
+                        Nomor Telepon : <?php echo $telp; ?> <br>
+Loket : <?php echo $loket; ?>
                     </div>
 
                 </div>
