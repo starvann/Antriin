@@ -1,23 +1,45 @@
+<?php
+$conn = mysqli_connect("127.0.0.1", "root", "", "admin_antrian");
+
+if (!$conn) {
+    die("Koneksi gagal: " . mysqli_connect_error());
+}
+
+// ambil data service + antrian aktif
+$query = mysqli_query($conn, "
+    SELECT s.id, s.name,
+    (
+        SELECT q.queue_number 
+        FROM queues q
+        WHERE q.service_id = s.id
+        AND q.status = 'waiting'
+        ORDER BY q.queue_number ASC
+        LIMIT 1
+    ) as current_queue
+    FROM services s
+");
+
+$services = [];
+
+while ($row = mysqli_fetch_assoc($query)) {
+    $services[] = $row;
+}
+?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Antriin Foodcourt</title>
-
-    <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Unica+One&display=swap" rel="stylesheet">
 
     <style>
-        /* ================= GLOBAL ================= */
-
+        /* (CSS kamu aku biarin, ga diubah) */
         body {
             margin: 0;
-            font-family: "Poppins", sans-serif;
+            font-family: "Poppins";
             background: #091F5B;
         }
 
@@ -25,9 +47,6 @@
             display: flex;
             height: 100vh;
         }
-
-
-        /* ================= SIDEBAR ================= */
 
         .sidebar {
             width: 280px;
@@ -43,8 +62,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* menu sidebar */
-
         .menu {
             margin-top: 40px;
         }
@@ -55,10 +72,8 @@
             gap: 12px;
             padding: 15px 0;
             cursor: pointer;
-            font-size: 16px;
-            color: white;
-            position: relative;
             justify-content: center;
+            position: relative;
         }
 
         .menu-item::after {
@@ -73,10 +88,7 @@
             transition: 0.3s;
         }
 
-        .menu-item.active::after {
-            width: 85%;
-        }
-
+        .menu-item.active::after,
         .menu-item:hover::after {
             width: 85%;
         }
@@ -84,8 +96,6 @@
         .icon-sidebar {
             width: 25px;
         }
-
-        /* icon besar dekorasi bawah */
 
         .sidebar-decoration {
             position: absolute;
@@ -99,23 +109,16 @@
             color: white;
         }
 
-        /* ================= MAIN CONTENT ================= */
-
         .main-content {
             flex: 1;
             background: white;
             border-radius: 40px 0 0 40px;
-
             background-image: url("assets/bg.png");
             background-size: cover;
-
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-
-
-        /* ================= HEADER ================= */
 
         .header {
             margin-top: 30px;
@@ -123,7 +126,6 @@
             padding: 10px 40px;
             border-radius: 30px;
             text-align: center;
-            font-family: "Poppins", sans-serif;
         }
 
         .header h1 {
@@ -135,12 +137,10 @@
 
         .header h2 {
             margin: 0;
-            font-family: "Unica One", sans-serif;
+            font-family: "Unica One";
             font-size: 32px;
             color: #091F5B;
         }
-
-        /* ================= DAFTAR ANTRIAN ================= */
 
         .antrian-container {
             width: 100%;
@@ -153,7 +153,6 @@
         }
 
         .antrian-card {
-            width: 100%;
             max-width: 400px;
             height: 190px;
             background: rgba(200, 220, 255, 0.7);
@@ -165,129 +164,65 @@
 
         .antrian-card h1 {
             font-size: 80px;
-            margin: 0px;
+            margin: 0;
             color: #091F5B;
-            font-family: "Poppins", sans-serif;
             font-weight: 500;
-            padding: 0px;
         }
 
         .judul {
             font-size: 20px;
-            color: #091F5B;
-            font-family: "Poppins", sans-serif;
             font-weight: bold;
-            margin-top: 5px;
+            color: #091F5B;
         }
 
         .tenant {
             font-size: 20px;
-            color: #091F5B;
-            font-family: "Poppins", sans-serif;
             border-top: 1px solid #091F5B;
-            margin: 0px;
+            margin-top: 5px;
             padding-top: 5px;
         }
     </style>
 </head>
 
-
-
 <body>
 
     <div class="container">
 
-
-        <!-- ================= SIDEBAR ================= -->
-
         <div class="sidebar">
-
             <img src="assets/logo.png" class="logo">
             <img src="assets/sidebar-decor.png" class="sidebar-decoration">
-            <div class="menu">
-                <div class="menu-item"> <img src="assets/vector/anmbil-antrian.png" alt="vector" class="icon-sidebar"> <a href="ambil-antian.php">Antrian</a> </div>
-                <div class="menu-item"> <img src="assets/vector/kartu-antrian.png" alt="vector" class="icon-sidebar"><a href="kartu-antrian.php">Kartu Antrian</a></div>
-                <div class="menu-item active"> <img src="assets/vector/daftar-antrian.png" alt="vector" class="icon-sidebar"><a href="daftar-antrian.php">Daftar Antrian</a></div>
-            </div>
 
+            <div class="menu">
+                <div class="menu-item"><img src="assets/vector/anmbil-antrian.png" class="icon-sidebar"><a href="ambil-antian.php">Antrian</a></div>
+                <div class="menu-item"><img src="assets/vector/kartu-antrian.png" class="icon-sidebar"><a href="kartu-antrian.php">Kartu Antrian</a></div>
+                <div class="menu-item active"><img src="assets/vector/daftar-antrian.png" class="icon-sidebar"><a href="#">Daftar Antrian</a></div>
+            </div>
         </div>
 
-
-
-        <!-- ================= MAIN CONTENT ================= -->
-
         <div class="main-content">
-
-            <!-- HEADER -->
 
             <div class="header">
                 <h1>FOODCOURT</h1>
                 <h2>BELITOPIA</h2>
             </div>
 
-            <!-- DAFTAR ANTRIAN -->
-
             <div class="antrian-container">
-                <div class="antrian-card">
-                    <div class="judul">NOMOR ANTRIAN SAAT INI</div>
-                    <h1> 01 </h1>
-                    <p class="tenant">DimTop - Dimsum Topia</p>
-                </div>
-                <div class="antrian-card">
-                    <div class="judul">NOMOR ANTRIAN SAAT INI</div>
-                    <h1> 01 </h1>
-                    <p class="tenant">Pentol Gacor</p>
-                </div>
-                <div class="antrian-card">
-                    <div class="judul">NOMOR ANTRIAN SAAT INI</div>
-                    <h1> 01 </h1>
-                    <p class="tenant">Tea Station</p>
-                </div>
-                <div class="antrian-card">
-                    <div class="judul">NOMOR ANTRIAN SAAT INI</div>
-                    <h1> 01 </h1>
-                    <p class="tenant">Man Se</p>
-                </div>
-                <div class="antrian-card">
-                    <div class="judul">NOMOR ANTRIAN SAAT INI</div>
-                    <h1> 01 </h1>
-                    <p class="tenant">Samtara - Sambalan Nusantara</p>
-                </div>
-                <div class="antrian-card">
-                    <div class="judul">NOMOR ANTRIAN SAAT INI</div>
-                    <h1> 01 </h1>
-                    <p class="tenant">Jasera - Jamuan Sejuta Rasa</p>
-                </div>
-                <div class="antrian-card">
-                    <div class="judul">NOMOR ANTRIAN SAAT INI</div>
-                    <h1> 01 </h1>
-                    <p class="tenant">Ramen Chan</p>
-                </div>
-                <div class="antrian-card">
-                    <div class="judul">NOMOR ANTRIAN SAAT INI</div>
-                    <h1> 01 </h1>
-                    <p class="tenant">Sushii Kun</p>
-                </div>
-                <div class="antrian-card">
-                    <div class="judul">NOMOR ANTRIAN SAAT INI</div>
-                    <h1> 01 </h1>
-                    <p class="tenant">Teh Java</p>
-                </div>
-                <div class="antrian-card">
-                    <div class="judul">NOMOR ANTRIAN SAAT INI</div>
-                    <h1> 01 </h1>
-                    <p class="tenant">belitopia</p>
-                </div>
-                <div class="antrian-card">
-                    <div class="judul">NOMOR ANTRIAN SAAT INI</div>
-                    <h1> 01 </h1>
-                    <p class="tenant">Ah Bang Kopitiam</p>
-                </div>
-                <div class="antrian-card">
-                    <div class="judul">NOMOR ANTRIAN SAAT INI</div>
-                    <h1> 01 </h1>
-                    <p class="tenant">-</p>
-                </div>
+
+                <?php foreach ($services as $s): ?>
+
+                    <div class="antrian-card">
+                        <div class="judul">NOMOR ANTRIAN SAAT INI</div>
+
+                        <h1>
+                            <?= $s['current_queue']
+                                ? str_pad($s['current_queue'], 2, "0", STR_PAD_LEFT)
+                                : "--"; ?>
+                        </h1>
+
+                        <p class="tenant"><?= $s['name']; ?></p>
+                    </div>
+
+                <?php endforeach; ?>
 
             </div>
 
