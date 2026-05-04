@@ -8,7 +8,7 @@ if (!$conn) {
 if (isset($_POST['ambil'])) {
 
     $telp = $_POST['telp'];
-    $service_id = $_POST['service_id']; // 🔥 LANGSUNG ID
+    $service_id = $_POST['service_id']; // LANGSUNG ID
 
     $today = date('Y-m-d');
 
