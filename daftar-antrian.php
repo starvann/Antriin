@@ -1,11 +1,6 @@
 <?php
-$conn = mysqli_connect("127.0.0.1", "root", "", "admin_antrian");
+include 'koneksi.php';
 
-if (!$conn) {
-    die("Koneksi gagal: " . mysqli_connect_error());
-}
-
-// ambil data service + antrian aktif
 $query = mysqli_query($conn, "
     SELECT s.id, s.name,
     (
@@ -16,7 +11,9 @@ $query = mysqli_query($conn, "
         ORDER BY q.queue_number ASC
         LIMIT 1
     ) as current_queue
-    FROM services s
+FROM services s
+WHERE s.is_active = 1
+ORDER BY s.name
 ");
 
 $services = [];
@@ -36,32 +33,40 @@ while ($row = mysqli_fetch_assoc($query)) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Unica+One&display=swap" rel="stylesheet">
 
     <style>
-        /* (CSS kamu aku biarin, ga diubah) */
+        * {
+    box-sizing: border-box;
+}
         body {
             margin: 0;
             font-family: "Poppins";
             background: #091F5B;
         }
+.container {
+    display: flex;
+    min-height: 100vh;
+}
 
-        .container {
-            display: flex;
-            height: 100vh;
-        }
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
 
-        .sidebar {
-            width: 280px;
-            background: #091F5B;
-            color: white;
-            padding: 30px;
-            position: relative;
-        }
+    width: 280px;
+    height: 100vh;
 
-        .logo {
-            width: 260px;
-            margin-bottom: 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
+    background: #091F5B;
+    color: white;
+    padding: 20px;
 
+    box-sizing: border-box;
+}
+
+.logo {
+    width: 100%;
+    max-width: 220px;
+    display: block;
+    margin: 0 auto 20px;
+}
         .menu {
             margin-top: 40px;
         }
@@ -109,16 +114,19 @@ while ($row = mysqli_fetch_assoc($query)) {
             color: white;
         }
 
-        .main-content {
-            flex: 1;
-            background: white;
-            border-radius: 40px 0 0 40px;
-            background-image: url("assets/bg.png");
-            background-size: cover;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+.main-content {
+    margin-left: 280px;
+
+    flex: 1;
+    background: white;
+    border-radius: 40px 0 0 40px;
+    background-image: url("assets/bg.png");
+    background-size: cover;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
         .header {
             margin-top: 30px;
@@ -142,25 +150,35 @@ while ($row = mysqli_fetch_assoc($query)) {
             color: #091F5B;
         }
 
-        .antrian-container {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            padding: 20px 40px;
-            overflow-y: auto;
-            margin: 30px auto;
-        }
+.antrian-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 
-        .antrian-card {
-            max-width: 400px;
-            height: 190px;
-            background: rgba(200, 220, 255, 0.7);
-            border-radius: 15px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        }
+    gap: 25px;
+    padding: 20px;
+    margin: 30px auto;
+
+    overflow-y: auto;
+}
+
+.antrian-card {
+    width: 100%;
+    max-width: 400px;
+
+    min-height: 190px;
+
+    background: rgba(200, 220, 255, 0.7);
+    border-radius: 15px;
+
+    padding: 15px;
+
+    text-align: center;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,.15);
+
+    justify-self: center;
+}
 
         .antrian-card h1 {
             font-size: 80px;
@@ -181,6 +199,138 @@ while ($row = mysqli_fetch_assoc($query)) {
             margin-top: 5px;
             padding-top: 5px;
         }
+
+        /* -------------- RESPONSIVE */
+        /* tablet */
+      @media (max-width: 1024px) {
+
+    .container {
+        flex-direction: column;
+    }
+
+.sidebar {
+
+    background: #091F5B;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+    .menu {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .menu-item {
+        padding: 10px 15px;
+    }
+
+    .sidebar-decoration {
+        display: none;
+    }
+
+.main-content {
+
+    flex: 1;
+    background: white;
+    border-radius: 40px 0 0 40px;
+
+    background-image: url("assets/bg.png");
+    background-size: cover;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+        .antrian-container {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 20px;
+    }
+}
+
+/* hp */
+@media (max-width: 768px) {
+
+    .container {
+        flex-direction: column;
+    }
+
+   .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+    }
+
+    .logo {
+        width: 150px;
+        display: block;
+        margin: 0 auto 15px;
+        border: none;
+    }
+
+    .sidebar-decoration {
+        display: none;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+
+    .menu-item {
+        padding: 10px 15px;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.1);
+        font-size: 14px;
+    }
+
+    .menu-item::after {
+        display: none;
+    }
+
+    .icon-sidebar {
+        width: 18px;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .header {
+        margin-top: 10px;
+        width: fit-content;
+        max-width: 90%;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .header h2 {
+        font-size: 16px;
+    }
+
+        .antrian-container {
+        grid-template-columns: 1fr;
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .antrian-card h1 {
+        font-size: 55px;
+    }
+
+    .judul,
+    .tenant {
+        font-size: 16px;
+    }
+
+}
     </style>
 </head>
 
@@ -195,7 +345,7 @@ while ($row = mysqli_fetch_assoc($query)) {
             <div class="menu">
                 <div class="menu-item"><img src="assets/vector/anmbil-antrian.png" class="icon-sidebar"><a href="ambil-antian.php">Antrian</a></div>
                 <div class="menu-item"><img src="assets/vector/kartu-antrian.png" class="icon-sidebar"><a href="kartu-antrian.php">Kartu Antrian</a></div>
-                <div class="menu-item active"><img src="assets/vector/daftar-antrian.png" class="icon-sidebar"><a href="#">Daftar Antrian</a></div>
+                <div class="menu-item active"><img src="assets/vector/daftar-antrian.png" class="icon-sidebar"><a href="daftar-antrian.php">Daftar Antrian</a></div>
             </div>
         </div>
 

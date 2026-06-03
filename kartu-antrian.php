@@ -1,3 +1,28 @@
+<?php
+session_start();
+include 'koneksi.php';
+
+$riwayat = $_SESSION['riwayat_antrian'] ?? [];
+
+if (empty($riwayat)) {
+    die("Belum ada riwayat antrian");
+}
+
+$id_list = implode(',', array_map('intval', $riwayat));
+
+$query = mysqli_query($conn,"
+SELECT
+    q.id,
+    q.queue_number,
+    q.visitor_phone,
+    s.name AS layanan
+FROM queues q
+JOIN services s
+ON q.service_id = s.id
+WHERE q.id IN ($id_list)
+ORDER BY q.id DESC
+");
+?>
 <html lang="en">
 
 <head>
@@ -20,36 +45,35 @@
             font-family: "Poppins", sans-serif;
             background: #091F5B;
         }
-
-        .container {
-            display: flex;
-            height: 100vh;
-        }
-
-        .judul {
-            position: absolute;
-            top: 25px;
-            width: 100%;
-            text-align: center;
-            font-weight: bold;
-            color: #091F5B;
-        }
+.container {
+    display: flex;
+    min-height: 100vh;
+}
 
         /* ================= SIDEBAR ================= */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
 
-        .sidebar {
-            width: 280px;
-            background: #091F5B;
-            color: white;
-            padding: 30px;
-            position: relative;
-        }
+    width: 280px;
+    height: 100vh;
 
-        .logo {
-            width: 260px;
-            margin-bottom: 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
+    background: #091F5B;
+    color: white;
+
+    padding: 20px;
+    box-sizing: border-box;
+
+    overflow: hidden;
+}
+
+.logo {
+    width: 100%;
+    max-width: 220px;
+    display: block;
+    margin: 0 auto 20px;
+}
 
         /* menu sidebar */
 
@@ -110,19 +134,25 @@
 
         /* ================= MAIN CONTENT ================= */
 
-        .main-content {
-            flex: 1;
-            background: white;
-            border-radius: 40px 0 0 40px;
-            background-image: url("assets/bg.png");
-            background-size: cover;
-            padding: 40px;
-            overflow-y: auto;
+.main-content {
+    margin-left: 280px;
 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    flex: 1;
+    background: white;
+    border-radius: 40px 0 0 40px;
+
+    background-image: url("assets/bg.png");
+    background-size: cover;
+
+    padding: 40px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow-y: auto;
+height: 100vh;
+}
 
 
         /* ================= HEADER ================= */
@@ -152,66 +182,186 @@
 
         /* ================= CARD ================= */
 
-        .cards {
-            display: grid;
-            gap: 40px;
-            grid-template-columns: repeat(2, 1fr);
-            width: 100%;
-            max-width: 1050px;
-        }
+.cards {
+    width: 100%;
 
-        .card {
-            position: relative;
-            width: 100%;
-            height: 220px;
-        }
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 25px;
+
+    justify-items: center;
+    align-items: start;
+}
 
         /* SATU KARTU  */
+.card-container {
+    position: relative;
 
-        .card-container {
-            position: relative;
-            height: 320px;
-            width: 100%;
-        }
+    width: 500px;
+    max-width: 100%;
 
-        .content {
-            text-align: center;
-        }
+    aspect-ratio: 800 / 661;
 
-        /* gambar kartu */
-
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
+    background-image: url("assets/Kartu.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
         /* nomor antrian */
 
-        .nomor {
-            position: absolute;
-            top: 46%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+.nomor {
+    position: absolute;
 
-            font-size: 90px;
-            font-weight: 800;
-        }
+    top: 40%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    font-size: 150px;
+    font-weight: 800;
+    color: #000;
+
+    line-height: 1;
+}
+
 
 
         /* info bawah kartu */
+.info {
+    position: absolute;
 
-        .info {
-            position: absolute;
-            bottom: 35px;
-            left: 50%;
-            font-size: 13px;
-            transform: translateX(-50%);
-            width: 65%;
-            text-align: center;
-            line-height: 1.4;
-        }
+    left: 50%;
+    bottom: 13%;
+
+    transform: translateX(-50%);
+
+    width: 65%;
+
+    text-align: left;
+
+    font-size: 20px;
+    line-height: 1.4;
+
+    color: #000;
+}
+
+        /* RESPONSIVEEEEEEEEEEEEE */
+        /* TABLET */
+        @media (max-width: 1024px) {
+
+    .cards {
+        grid-template-columns: 1fr;
+        max-width: 700px;
+    }
+
+    .card-container {
+        height: 280px;
+    }
+
+    .nomor {
+        font-size: 75px;
+    }
+
+    .info {
+        width: 70%;
+    }
+}
+
+/* HP */
+@media (max-width: 768px) {
+
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        padding: 15px;
+    }
+
+    .logo {
+        width: 150px;
+        display: block;
+        margin: 0 auto 15px;
+        border: none;
+    }
+
+    .sidebar-decoration {
+        display: none;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .menu-item {
+        padding: 10px 15px;
+        border-radius: 10px;
+        background: rgba(255,255,255,.1);
+        font-size: 14px;
+    }
+
+    .menu-item::after {
+        display: none;
+    }
+
+    .icon-sidebar {
+        width: 18px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        border-radius: 30px 30px 0 0;
+        padding: 20px;
+    }
+
+    .header {
+        width: fit-content;
+        max-width: 90%;
+        margin-bottom: 20px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .header h2 {
+        font-size: 16px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+        .card-container {
+        width: 95%;
+        height: auto;
+        aspect-ratio: 800 / 661;
+    }
+
+    .nomor {
+        font-size: 80px;
+        top: 40%;
+    }
+
+    .info {
+        width: 70%;
+        font-size: 10px;
+        bottom: 12%;
+    }
+
+    
+}
+
     </style>
 </head>
 
@@ -247,111 +397,26 @@
                 <h2>BELITOPIA</h2>
             </div>
 
-            <!-- TAMBAHAN PENTING (INI YANG KAMU KURANGIN!) -->
             <div class="cards">
 
-                <!-- KARTU -->
-                <div class="card-container">
-                    <img src="assets/Kartu.png" class="card-img">
-                    <div class="nomor">34</div>
-                    <div class="info">
-                        Nomor Telepon : 084782347238 <br>
-                        Loket : DimTop - Dimsum Topia
-                    </div>
-                </div>
+<?php while($data = mysqli_fetch_assoc($query)) : ?>
 
-                <div class="card-container">
-                    <img src="assets/Kartu.png" class="card-img">
-                    <div class="nomor">34</div>
-                    <div class="info">
-                        Nomor Telepon : 084782347238 <br>
-                        Loket : Samtara - Sambal Nusantara
-                    </div>
-                </div>
+<div class="card-container">
 
-                <div class="card-container">
-                    <img src="assets/Kartu.png" class="card-img">
-                    <div class="nomor">34</div>
-                    <div class="info">
-                        Nomor Telepon : 084782347238 <br>
-                        Loket : Pentol Gacor
-                    </div>
-                </div>
+    <div class="nomor">
+       <?= str_pad($data['queue_number'], 2, "0", STR_PAD_LEFT); ?>
+    </div>
 
-                <div class="card-container">
-                    <img src="assets/Kartu.png" class="card-img">
-                    <div class="nomor">34</div>
-                    <div class="info">
-                        Nomor Telepon : 084782347238 <br>
-                        Loket : Man Se
-                    </div>
-                </div>
+    <div class="info">
+        Nomor Telepon : <?= $data['visitor_phone']; ?> <br>
+        Loket : <?= $data['layanan']; ?>
+    </div>
 
-                <div class="card-container">
-                    <img src="assets/Kartu.png" class="card-img">
-                    <div class="nomor">34</div>
-                    <div class="info">
-                        Nomor Telepon : 084782347238 <br>
-                        Loket : Ah Bang Kopitiam
-                    </div>
-                </div>
+</div>
 
-                <div class="card-container">
-                    <img src="assets/Kartu.png" class="card-img">
-                    <div class="nomor">34</div>
-                    <div class="info">
-                        Nomor Telepon : 084782347238 <br>
-                        Loket : Tea Station
-                    </div>
-                </div>
+<?php endwhile; ?>
 
-                <div class="card-container">
-                    <img src="assets/Kartu.png" class="card-img">
-                    <div class="nomor">34</div>
-                    <div class="info">
-                        Nomor Telepon : 084782347238 <br>
-                        Loket : Jasera
-                    </div>
-                </div>
-
-                <div class="card-container">
-                    <img src="assets/Kartu.png" class="card-img">
-                    <div class="nomor">34</div>
-                    <div class="info">
-                        Nomor Telepon : 084782347238 <br>
-                        Loket : Steak City
-                    </div>
-                </div>
-
-                <div class="card-container">
-                    <img src="assets/Kartu.png" class="card-img">
-                    <div class="nomor">34</div>
-                    <div class="info">
-                        Nomor Telepon : 084782347238 <br>
-                        Loket : Sushikun
-                    </div>
-                </div>
-
-                <div class="card-container">
-                    <img src="assets/Kartu.png" class="card-img">
-                    <div class="nomor">34</div>
-                    <div class="info">
-                        Nomor Telepon : 084782347238 <br>
-                        Loket : Ramenchan
-                    </div>
-                </div>
-
-                <div class="card-container">
-                    <img src="assets/Kartu.png" class="card-img">
-                    <div class="nomor">34</div>
-                    <div class="info">
-                        Nomor Telepon : 084782347238 <br>
-                        Loket : Teh Jawa
-                    </div>
-                </div>
-
-            </div>
-
+</div>
         </div>
 
     </div>

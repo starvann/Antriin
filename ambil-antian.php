@@ -1,38 +1,72 @@
 <?php
-include './koneksi.php';
+session_start();
+include 'koneksi.php';
 
 if (isset($_POST['ambil'])) {
 
-    $telp = $_POST['telp'];
-    $service_id = $_POST['service_id']; // LANGSUNG ID
+    $telp = mysqli_real_escape_string($conn, $_POST['telp']);
+    $service_id = (int) $_POST['service_id'];
 
     $today = date('Y-m-d');
 
-    // ambil nomor terakhir
+    // Ambil nomor antrian terakhir untuk tenant yang dipilih hari ini
     $query = mysqli_query($conn, "
-        SELECT MAX(queue_number) as last 
-        FROM queues 
-        WHERE service_id = $service_id 
+        SELECT MAX(queue_number) AS last_number
+        FROM queues
+        WHERE service_id = $service_id
         AND appointment_date = '$today'
     ");
 
     $data = mysqli_fetch_assoc($query);
-    $last = $data['last'] ?? 0;
-    $next = $last + 1;
 
-    // insert
-    mysqli_query($conn, "
-        INSERT INTO queues 
-        (service_id, queue_number, appointment_date, status, visitor_phone, created_at, updated_at) 
-        VALUES 
-        ($service_id, $next, '$today', 'waiting', '$telp', NOW(), NOW())
+    $last_number = $data['last_number'] ?? 0;
+    $next_number = $last_number + 1;
+
+    // Simpan ke database
+    $insert = mysqli_query($conn, "
+        INSERT INTO queues
+        (
+            service_id,
+            queue_number,
+            appointment_date,
+            status,
+            visitor_phone,
+            created_at,
+            updated_at
+        )
+        VALUES
+        (
+            $service_id,
+            $next_number,
+            '$today',
+            'waiting',
+            '$telp',
+            NOW(),
+            NOW()
+        )
     ");
 
-    header("Location: nomor-antrian.php?nomor=$next&telp=$telp");
+if ($insert) {
+
+    $queue_id = mysqli_insert_id($conn);
+
+    if (!isset($_SESSION['riwayat_antrian'])) {
+        $_SESSION['riwayat_antrian'] = [];
+    }
+
+    $_SESSION['riwayat_antrian'][] = $queue_id;
+
+    header("Location: nomor-antrian.php?id=$queue_id");
     exit;
 }
+}
 
-$services = mysqli_query($conn, "SELECT id, name FROM services");
+$services = mysqli_query($conn, "
+    SELECT id, name
+    FROM services
+    WHERE is_active = 1
+    ORDER BY name
+");
 ?>
 
 <!DOCTYPE html>
@@ -59,28 +93,26 @@ $services = mysqli_query($conn, "SELECT id, name FROM services");
             background: #091F5B;
         }
 
-        .container {
-            display: flex;
-            height: 100vh;
-        }
+.container {
+    display: flex;
+    min-height: 100vh;
+}
 
+.sidebar {
+    width: 280px;
+    background: #091F5B;
+    color: white;
+    padding: 20px;
+    position: relative;
+    box-sizing: border-box;
+}
 
-        /* ================= SIDEBAR ================= */
-
-        .sidebar {
-            width: 280px;
-            background: #091F5B;
-            color: white;
-            padding: 30px;
-            position: relative;
-        }
-
-        .logo {
-            width: 260px;
-            margin-bottom: 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
+.logo {
+    width: 100%;
+    max-width: 220px;
+    display: block;
+    margin: 0 auto 20px;
+}
         /* menu sidebar */
 
         .menu {
@@ -180,14 +212,18 @@ $services = mysqli_query($conn, "SELECT id, name FROM services");
 
         /* ================= FORM ================= */
 
-        .form-box {
-            margin-top: 50px;
-            background: #F1F5FB;
-            padding: 40px;
-            border-radius: 20px;
-            width: 520px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
+.form-box {
+    width: 90%;
+    max-width: 520px;
+
+    margin-top: 50px;
+    background: #F1F5FB;
+    padding: 40px;
+    border-radius: 20px;
+    box-sizing: border-box;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
 
         .form-box h2 {
             text-align: center;
@@ -211,6 +247,7 @@ $services = mysqli_query($conn, "SELECT id, name FROM services");
             border: none;
             background: #E9EDF5;
             font-family: "Poppins", sans-serif;
+            box-sizing: border-box;
         }
 
         .form-box button {
@@ -244,28 +281,8 @@ $services = mysqli_query($conn, "SELECT id, name FROM services");
             transform: scale(1.03);
         }
 
-        .hasil {
-            margin-top: 20px;
-            padding: 12px;
-            background: #DFF0D8;
-            color: #2E7D32;
-            border-radius: 10px;
-            text-align: center;
-        }
-
 
         /* ================= BUTTON ================= */
-
-        .btn {
-            margin-top: 30px;
-            background: #091F5B;
-            color: white;
-            border: none;
-            padding: 12px 40px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-        }
 
 
         .form-box select option:hover {
@@ -275,70 +292,124 @@ $services = mysqli_query($conn, "SELECT id, name FROM services");
         /* ================= RESPONSIVE ================= */
 
         /* Tablet */
-        @media (max-width: 1024px) {
+@media (max-width: 1024px) {
 
-            .container {
-                flex-direction: column;
-                height: auto;
-                display: flex;
-                min-height: 100vh;
-            }
+    .container {
+        flex-direction: column;
+    }
 
-            .sidebar {
-                width: 100%;
-                text-align: center;
-            }
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+    }
 
-            .main-content {
-                border-radius: 0;
-                padding-bottom: 40px;
-            }
+    .menu {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
 
-            .form-box {
-                width: 80%;
-            }
+    .menu-item {
+        padding: 10px 15px;
+    }
 
-        }
+    .sidebar-decoration {
+        display: none;
+    }
+
+    .main-content {
+        border-radius: 30px 30px 0 0;
+        min-height: auto;
+        padding-bottom: 30px;
+    }
+}
 
         /* HP */
-        @media (max-width: 600px) {
+@media (max-width: 768px) {
 
-            .logo {
-                width: 120px;
-            }
+    .container {
+        flex-direction: column;
+    }
 
-            .menu-item {
-                font-size: 12px;
-                padding: 10px 0;
-            }
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+        box-sizing: border-box;
+    }
 
-            /* header */
-            .header h1 {
-                font-size: 24px;
-            }
+    .logo {
+        width: 150px;
+        display: block;
+        margin: 0 auto 15px;
+        border: none;
+    }
 
-            .header h2 {
-                font-size: 16px;
-            }
+    .sidebar-decoration {
+        display: none;
+    }
 
-            /* form */
-            .form-box {
-                width: 90%;
-                padding: 25px;
-            }
+    .menu {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
 
-            .form-box input,
-            .form-box select {
-                padding: 10px;
-                font-size: 14px;
-            }
+    .menu-item {
+        padding: 10px 15px;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.1);
+        font-size: 14px;
+    }
 
-            .form-box button {
-                font-size: 14px;
-                padding: 10px;
-            }
+    .menu-item::after {
+        display: none;
+    }
 
-        }
+    .icon-sidebar {
+        width: 18px;
+    }
+
+    .main-content {
+        border-radius: 30px 30px 0 0;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .header {
+        margin-top: 10px;
+        width: fit-content;
+        max-width: 90%;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .header h2 {
+        font-size: 16px;
+    }
+
+    .form-box {
+        width: 100%;
+        max-width: 500px;
+        padding: 20px;
+        margin-top: 25px;
+        box-sizing: border-box;
+    }
+
+    .form-box h2 {
+        font-size: 20px;
+    }
+
+    .form-box input,
+    .form-box select,
+    .form-box button {
+        font-size: 14px;
+    }
+}
     </style>
 </head>
 
