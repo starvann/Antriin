@@ -2,7 +2,6 @@
 session_start();
 include 'koneksi.php';
 
-// Ambil datanya gessss
 if (isset($_POST['ambil'])) {
 
 
@@ -26,7 +25,6 @@ if (isset($_POST['ambil'])) {
     $last_number = $data['last_number'] ?? 0;
     $next_number = $last_number + 1;
 
-    // Simpan ke database
     $insert = mysqli_query($conn, "
         INSERT INTO queues
         (

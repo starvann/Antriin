@@ -34,39 +34,42 @@ while ($row = mysqli_fetch_assoc($query)) {
 
     <style>
         * {
-    box-sizing: border-box;
-}
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: "Poppins";
             background: #091F5B;
         }
-.container {
-    display: flex;
-    min-height: 100vh;
-}
 
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
 
-    width: 280px;
-    height: 100vh;
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
 
-    background: #091F5B;
-    color: white;
-    padding: 20px;
+            width: 280px;
+            height: 100vh;
 
-    box-sizing: border-box;
-}
+            background: #091F5B;
+            color: white;
+            padding: 20px;
 
-.logo {
-    width: 100%;
-    max-width: 220px;
-    display: block;
-    margin: 0 auto 20px;
-}
+            box-sizing: border-box;
+        }
+
+        .logo {
+            width: 100%;
+            max-width: 220px;
+            display: block;
+            margin: 0 auto 20px;
+        }
+
         .menu {
             margin-top: 40px;
         }
@@ -114,19 +117,19 @@ while ($row = mysqli_fetch_assoc($query)) {
             color: white;
         }
 
-.main-content {
-    margin-left: 280px;
+        .main-content {
+            margin-left: 280px;
 
-    flex: 1;
-    background: white;
-    border-radius: 40px 0 0 40px;
-    background-image: url("assets/bg.png");
-    background-size: cover;
+            flex: 1;
+            background: white;
+            border-radius: 40px 0 0 40px;
+            background-image: url("assets/bg.png");
+            background-size: cover;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
         .header {
             margin-top: 30px;
@@ -150,35 +153,35 @@ while ($row = mysqli_fetch_assoc($query)) {
             color: #091F5B;
         }
 
-.antrian-container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+        .antrian-container {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
 
-    gap: 25px;
-    padding: 20px;
-    margin: 30px auto;
+            gap: 25px;
+            padding: 20px;
+            margin: 30px auto;
 
-    overflow-y: auto;
-}
+            overflow-y: auto;
+        }
 
-.antrian-card {
-    width: 100%;
-    max-width: 400px;
+        .antrian-card {
+            width: 100%;
+            max-width: 400px;
 
-    min-height: 190px;
+            min-height: 190px;
 
-    background: rgba(200, 220, 255, 0.7);
-    border-radius: 15px;
+            background: rgba(200, 220, 255, 0.7);
+            border-radius: 15px;
 
-    padding: 15px;
+            padding: 15px;
 
-    text-align: center;
+            text-align: center;
 
-    box-shadow: 0 4px 10px rgba(0,0,0,.15);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
 
-    justify-self: center;
-}
+            justify-self: center;
+        }
 
         .antrian-card h1 {
             font-size: 80px;
@@ -202,135 +205,135 @@ while ($row = mysqli_fetch_assoc($query)) {
 
         /* -------------- RESPONSIVE */
         /* tablet */
-      @media (max-width: 1024px) {
+        @media (max-width: 1024px) {
 
-    .container {
-        flex-direction: column;
-    }
+            .container {
+                flex-direction: column;
+            }
 
-.sidebar {
+            .sidebar {
 
-    background: #091F5B;
-    padding: 20px;
-    box-sizing: border-box;
-}
+                background: #091F5B;
+                padding: 20px;
+                box-sizing: border-box;
+            }
 
-    .menu {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 15px;
-    }
+            .menu {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
 
-    .menu-item {
-        padding: 10px 15px;
-    }
+            .menu-item {
+                padding: 10px 15px;
+            }
 
-    .sidebar-decoration {
-        display: none;
-    }
+            .sidebar-decoration {
+                display: none;
+            }
 
-.main-content {
+            .main-content {
 
-    flex: 1;
-    background: white;
-    border-radius: 40px 0 0 40px;
+                flex: 1;
+                background: white;
+                border-radius: 40px 0 0 40px;
 
-    background-image: url("assets/bg.png");
-    background-size: cover;
+                background-image: url("assets/bg.png");
+                background-size: cover;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
 
-        .antrian-container {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 20px;
-    }
-}
+            .antrian-container {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 20px;
+            }
+        }
 
-/* hp */
-@media (max-width: 768px) {
+        /* hp */
+        @media (max-width: 768px) {
 
-    .container {
-        flex-direction: column;
-    }
+            .container {
+                flex-direction: column;
+            }
 
-   .sidebar {
-        position: static;
-        width: 100%;
-        height: auto;
-    }
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+            }
 
-    .logo {
-        width: 150px;
-        display: block;
-        margin: 0 auto 15px;
-        border: none;
-    }
+            .logo {
+                width: 150px;
+                display: block;
+                margin: 0 auto 15px;
+                border: none;
+            }
 
-    .sidebar-decoration {
-        display: none;
-    }
+            .sidebar-decoration {
+                display: none;
+            }
 
-    .menu {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 10px;
-        flex-wrap: wrap;
-    }
+            .menu {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 10px;
+                flex-wrap: wrap;
+            }
 
-    .menu-item {
-        padding: 10px 15px;
-        border-radius: 10px;
-        background: rgba(255,255,255,0.1);
-        font-size: 14px;
-    }
+            .menu-item {
+                padding: 10px 15px;
+                border-radius: 10px;
+                background: rgba(255, 255, 255, 0.1);
+                font-size: 14px;
+            }
 
-    .menu-item::after {
-        display: none;
-    }
+            .menu-item::after {
+                display: none;
+            }
 
-    .icon-sidebar {
-        width: 18px;
-    }
+            .icon-sidebar {
+                width: 18px;
+            }
 
-    .main-content {
-        margin-left: 0;
-    }
+            .main-content {
+                margin-left: 0;
+            }
 
-    .header {
-        margin-top: 10px;
-        width: fit-content;
-        max-width: 90%;
-    }
+            .header {
+                margin-top: 10px;
+                width: fit-content;
+                max-width: 90%;
+            }
 
-    .header h1 {
-        font-size: 24px;
-    }
+            .header h1 {
+                font-size: 24px;
+            }
 
-    .header h2 {
-        font-size: 16px;
-    }
+            .header h2 {
+                font-size: 16px;
+            }
 
-        .antrian-container {
-        grid-template-columns: 1fr;
-        padding: 10px;
-        gap: 15px;
-    }
+            .antrian-container {
+                grid-template-columns: 1fr;
+                padding: 10px;
+                gap: 15px;
+            }
 
-    .antrian-card h1 {
-        font-size: 55px;
-    }
+            .antrian-card h1 {
+                font-size: 55px;
+            }
 
-    .judul,
-    .tenant {
-        font-size: 16px;
-    }
+            .judul,
+            .tenant {
+                font-size: 16px;
+            }
 
-}
+        }
     </style>
 </head>
 
