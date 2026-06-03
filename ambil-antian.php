@@ -62,13 +62,6 @@ if (isset($_POST['ambil'])) {
         $_SESSION['riwayat_antrian'][] = $queue_id;
 
         header("Location: nomor-antrian.php?id=$queue_id");
-
-
-        $getService = mysqli_query($conn, "SELECT name FROM services WHERE id = $service_id");
-        $service = mysqli_fetch_assoc($getService);
-        $nama_loket = $service['name'];
-
-        header("Location: nomor-antrian.php?nomor=$next&telp=$telp&loket=$nama_loket");
         exit;
     }
 }
