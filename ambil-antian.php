@@ -2,10 +2,17 @@
 session_start();
 include 'koneksi.php';
 
+// Ambil datanya gessss
 if (isset($_POST['ambil'])) {
 
+<<<<<<< HEAD
     $telp = mysqli_real_escape_string($conn, $_POST['telp']);
     $service_id = (int) $_POST['service_id'];
+=======
+    $telp = $_POST['telp'];
+    $service_id = $_POST['service_id']; // LANGSUNG IDNYA
+
+>>>>>>> 036c77e555a94ee5fb3fc417b1d39da6fa190185
 
     $today = date('Y-m-d');
 
@@ -46,6 +53,7 @@ if (isset($_POST['ambil'])) {
         )
     ");
 
+<<<<<<< HEAD
 if ($insert) {
 
     $queue_id = mysqli_insert_id($conn);
@@ -57,6 +65,15 @@ if ($insert) {
     $_SESSION['riwayat_antrian'][] = $queue_id;
 
     header("Location: nomor-antrian.php?id=$queue_id");
+=======
+    // ambil nama loket
+    $getService = mysqli_query($conn, "SELECT name FROM services WHERE id = $service_id");
+    $service = mysqli_fetch_assoc($getService);
+    $nama_loket = $service['name'];
+
+    // ini ngirim ke next page yh gais 
+    header("Location: nomor-antrian.php?nomor=$next&telp=$telp&loket=$nama_loket");
+>>>>>>> 036c77e555a94ee5fb3fc417b1d39da6fa190185
     exit;
 }
 }
